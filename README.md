@@ -1,5 +1,5 @@
 # testapi
-This is a customize API for testing /learning purpose,
+This is a customize API for testing/learning purpose,
 
 npm packages:
 1-express(for API and requests)
