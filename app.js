@@ -20,7 +20,7 @@ app.use('/orders',prodOrder);
 //error handling
 app.use((req,res,next)=>{
 
-    const err = new Error('Page Not Found');
+    const err = new Error('This page does not exist, Navigate to /products or /orders');
     err.status = 404;    
     next(err);
 
