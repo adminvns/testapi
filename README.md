@@ -1,3 +1,8 @@
+[![CodeQL](https://github.com/adminvns/testapi/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/adminvns/testapi/actions/workflows/codeql-analysis.yml) <br>
+[![CodeQL](https://github.com/adminvns/testapi/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/adminvns/testapi/actions/workflows/codeql-analysis.yml)
+
+
+
 # testapi
 This is a customize API for testing/learning purpose.</br>
 
