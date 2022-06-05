@@ -1,5 +1,5 @@
 [![CodeQL](https://github.com/adminvns/testapi/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/adminvns/testapi/actions/workflows/codeql-analysis.yml) 
-[![Node.js CI](https://github.com/adminvns/testapi/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/adminvns/testapi/actions/workflows/node.js.yml)<br>
+[![Node.js CI](https://github.com/adminvns/testapi/actions/workflows/node.js.yml/badge.svg?branch=main&event=push)](https://github.com/adminvns/testapi/actions/workflows/node.js.yml)<br>
 # testapi
 This is a customize API for testing/learning purpose.</br>
 
