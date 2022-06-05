@@ -1,4 +1,4 @@
-[![CodeQL](https://github.com/adminvns/testapi/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/adminvns/testapi/actions/workflows/codeql-analysis.yml) <br>
+[![CodeQL](https://github.com/adminvns/testapi/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/adminvns/testapi/actions/workflows/codeql-analysis.yml) 
 [![CodeQL](https://github.com/adminvns/testapi/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/adminvns/testapi/actions/workflows/codeql-analysis.yml)
 
 
