@@ -1,5 +1,6 @@
 [![CodeQL](https://github.com/adminvns/testapi/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/adminvns/testapi/actions/workflows/codeql-analysis.yml) 
-[![Deploy](https://github.com/adminvns/testapi/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/adminvns/testapi/actions/workflows/node.js.yml)<br>
+[![Cypress-Automation-Test](https://github.com/adminvns/cypress_reports/actions/workflows/cypress-report.yml/badge.svg?branch=main)](https://github.com/adminvns/cypress_reports/actions/workflows/cypress-report.yml)
+[![Deployment](https://github.com/adminvns/testapi/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/adminvns/testapi/actions/workflows/node.js.yml)<br>
 # testapi
 This is a customize API for testing/learning purpose.</br>
 
