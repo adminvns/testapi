@@ -5,10 +5,10 @@ on:
       - main
 jobs:
   build:
-    name: Run Web App
+    name: Trigger API Testing
     runs-on: ubuntu-latest
     steps:
-      - name: Build Web App
+      - name: API Testing
         run: |
           echo "Start the Cypress Test"
           sleep 10s
@@ -18,7 +18,7 @@ jobs:
           repo: cypress_reports
           github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN}}
           workflow_file_name: cypress-report.yml
-      - name: Deploy Web App
+      - name: API Testing..
         run: |
           echo "Success!!"
           sleep 10s
