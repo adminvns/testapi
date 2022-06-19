@@ -17,7 +17,7 @@ jobs:
           owner: adminvns
           repo: cypress_reports
           github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN}}
-          workflow_file_name: cypress_report.yml
+          workflow_file_name: cypress-report.yml
       - name: Deploy Web App
         run: |
           echo "Success!!"
