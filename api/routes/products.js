@@ -5,7 +5,7 @@ router.get('/',(req, res, next) =>{
 
 res.status(200).json({
 
-    message: "Products(get method)"
+    message: "Products(GET method)"
 });
 
 } );
@@ -14,7 +14,7 @@ router.post('/',(req, res, next) =>{
 
     res.status(201).json({
     
-        message: "Products(post method)"
+        message: "Products(POST method)"
     });
     } );
 
@@ -26,7 +26,7 @@ router.post('/',(req, res, next) =>{
     if(id==123){
 
         res.status(200).json({
-            message: "congratulations on winning it",
+            message: "Congratulations on winning it",
             id: id
         });
     
@@ -34,7 +34,7 @@ router.post('/',(req, res, next) =>{
 
         res.status(200).json({
 
-            message: "this is random id" 
+            message: "This is random id" 
         });
     }
 
@@ -44,7 +44,7 @@ router.post('/',(req, res, next) =>{
  router.patch('/:productID',(req, res, next)=> {
         res.status(200).json({
 
-            message :" Product updated successfully."
+            message :" Product updated successfully!"
         })
  }); 
 
