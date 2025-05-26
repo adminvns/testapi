@@ -26,7 +26,7 @@ Experience the API in action: [https://testapi-4r9g.onrender.com](https://testap
 git clone https://github.com/adminvns/testapi.git
 cd testapi
 npm install
-npm run dev
+nodemon server.js
 
 ## 🧪 API Endpoints
 
