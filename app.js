@@ -3,6 +3,7 @@ var app = express();
 const morgan = require('morgan')
 const prodRoute = require('./api/routes/products')
 const prodOrder = require('./api/routes/orders')
+const healthRoute = require('./api/routes/healthCheck');
 //rerouting requests
 
 app.use(morgan('dev'));
@@ -16,6 +17,7 @@ app.use('/orders',prodOrder);
 
 // });
 
+app.use('/health', healthRoute);
 
 //error handling
 app.use((req,res,next)=>{
