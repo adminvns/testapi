@@ -30,7 +30,6 @@ nodemon server.js
 
 ## 🧪 API Endpoints
 
-- `GET /api/hello` – Returns a welcome message  
-- `POST /api/data` – Accepts JSON data and returns a confirmation  
-
+- `GET /api/orders` – Lists demo order  
+- `POST /api/products` –  Lists demo products
 _For full details, check the route definitions in [`api/routes/`](./api/routes/)._
