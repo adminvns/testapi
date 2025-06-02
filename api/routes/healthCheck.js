@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 function formatUptime(seconds) {
-  const mins = Math.floor(seconds / 60);
+  const hours = Math.floor(seconds / 3600);
+  const mins = Math.floor((seconds % 3600) / 60);
   const secs = Math.floor(seconds % 60);
-  return `Up from past ${mins} minute${mins !== 1 ? 's' : ''} ${secs} second${secs !== 1 ? 's' : ''}`;
+  return `Up from past ${hours ? `${hours} hour${hours !== 1 ? 's' : ''} ` : ''}${mins} minute${mins !== 1 ? 's' : ''} ${secs} second${secs !== 1 ? 's' : ''}`;
 }
 
 router.get('/', (req, res) => {
