@@ -1,4 +1,4 @@
-FROM debian:bookworm-20231218 as builder
+FROM debian:12.11 as builder
 
 ARG NODE_VERSION=12.22.9
 
@@ -22,7 +22,7 @@ ENV NODE_ENV production
 COPY . .
 
 RUN npm install
-FROM debian:bookworm-20231218
+FROM debian:12.11
 
 LABEL fly_launch_runtime="nodejs"
 
