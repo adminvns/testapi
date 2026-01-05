@@ -11,119 +11,46 @@ on:
 permissions:
   contents: write
   pull-requests: write
-  checks: read
-  statuses: read
 
 jobs:
   automerge:
     runs-on: ubuntu-latest
 
-    # Only run for Dependabot or Snyk PRs
+    # Only Dependabot and Snyk PRs
     if: >
       github.event.pull_request.user.login == 'dependabot[bot]' ||
       github.event.pull_request.user.login == 'snyk-bot'
 
     steps:
-      - name: Evaluate PR, wait for required checks, and comment decision
+      - name: Cool-off period (wait 3.5 minutes)
+        run: sleep 210
+
+      - name: Comment and proceed with auto-merge
         uses: actions/github-script@v7
         with:
           script: |
             const owner = context.repo.owner;
             const repo = context.repo.repo;
             const pr = context.payload.pull_request;
-            const sha = pr.head.sha;
 
-            // REQUIRED status check contexts (must exactly match branch rules)
-            const REQUIRED_CONTEXTS = [
-              'adminvns.testapi',
-              'Codacy Static Code Analysis',
-              'security/snyk (webnesters)'
-            ];
+            await github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number: pr.number,
+              body: [
+                '⏳ **Auto-merge initiated after 3.5 minute cool-off period**',
+                '',
+                'The bot did not evaluate CI or status checks.',
+                'GitHub branch protection rules will decide final merge eligibility.',
+                '',
+                'Proceeding with auto-merge.'
+              ].join('\n')
+            });
 
-            const sleep = ms => new Promise(r => setTimeout(r, ms));
-
-            // Exponential backoff config
-            let delay = 5000;          // 5s
-            const maxDelay = 60000;    // 60s cap
-            const maxAttempts = 10;    // ~5 min max
-
-            let checksPassed = false;
-
-            for (let attempt = 1; attempt <= maxAttempts; attempt++) {
-              const { data } =
-                await github.rest.repos.getCombinedStatusForRef({
-                  owner,
-                  repo,
-                  ref: sha
-                });
-
-              const relevantStatuses = data.statuses.filter(s =>
-                REQUIRED_CONTEXTS.includes(s.context)
-              );
-
-              const allDone =
-                relevantStatuses.length === REQUIRED_CONTEXTS.length &&
-                relevantStatuses.every(s => s.state === 'success');
-
-              if (allDone) {
-                checksPassed = true;
-                break;
-              }
-
-              if (attempt === maxAttempts) break;
-
-              await sleep(delay);
-              delay = Math.min(delay * 2, maxDelay);
-            }
-
-            // -------- policy evaluation --------
-            const reasons = [];
-
-            if (!checksPassed) {
-              reasons.push('Required status checks did not complete successfully in time');
-            }
-
-            if (pr.changed_files > 5) {
-              reasons.push(`Too many files changed (${pr.changed_files} > 5)`);
-            }
-
-            if (/\b(major|minor)\b/i.test(pr.title)) {
-              reasons.push(`Blocked by title rule ("${pr.title}")`);
-            }
-
-            // -------- decision + PR comment --------
-            if (reasons.length > 0) {
-              await github.rest.issues.createComment({
-                owner,
-                repo,
-                issue_number: pr.number,
-                body: [
-                  '⏭️ **Auto-merge skipped**',
-                  '',
-                  'Reason(s):',
-                  ...reasons.map(r => `- ${r}`),
-                  '',
-                  '_Manual review required._'
-                ].join('\n')
-              });
-
-              core.setFailed('Auto-merge skipped due to policy or check failure');
-            } else {
-              await github.rest.issues.createComment({
-                owner,
-                repo,
-                issue_number: pr.number,
-                body: [
-                  '✅ **Auto-merge approved**',
-                  '',
-                  'All required checks passed and policy rules were satisfied.',
-                  'Proceeding with auto-merge.'
-                ].join('\n')
-              });
-            }
+      - name: Check out repository
+        uses: actions/checkout@v4
 
       - name: Enable auto-merge via GitHub CLI
-        if: success()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
