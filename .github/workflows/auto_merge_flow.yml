@@ -1,0 +1,48 @@
+name: Auto-merge bot flow
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  automerge:
+    runs-on: ubuntu-latest
+    if: >
+      github.event.pull_request.user.login == 'dependabot[bot]' ||
+      github.event.pull_request.user.login == 'snyk-bot'
+
+    steps:
+      - name: Policy checks (mergeability, size, title)
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+
+            // 1. Ensure all required checks passed
+            if (pr.mergeable_state !== 'clean') {
+              core.setFailed('PR is not in clean mergeable state');
+            }
+
+            // 2. Block large PRs
+            if (pr.changed_files > 5) {
+              core.setFailed(
+                `Too many files changed (${pr.changed_files}). Manual approval required.`
+              );
+            }
+
+            // 3. Block risky titles
+            const riskyTitleRegex = /\b(major|minor|fix)\b/i;
+            if (riskyTitleRegex.test(pr.title)) {
+              core.setFailed(
+                `PR title contains restricted keyword: "${pr.title}". Manual approval required.`
+              );
+            }
+
+      - name: Enable auto-merge
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          merge-method: squash
