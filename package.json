@@ -1,8 +1,8 @@
 {
   "name": "testapi",
   "version": "1.0.0",
-  "description": "a test api",
-  "main": "index.js",
+  "description": "This is a simple RESTful API built for automation testing practice. It provides predictable responses and basic endpoints that testers can use to validate test scripts, API automation tools, and workflows.",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "test": "mocha"
