@@ -1,0 +1,52 @@
+name: auto-tagger
+on:
+  push:
+    branches: [main]
+
+jobs:
+  tagger:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get previous tag
+        run: |
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "LAST_TAG=$LAST_TAG" >> $GITHUB_ENV
+
+      - name: Decide new tag
+        run: |
+          FILES=$(git diff --name-only $LAST_TAG..HEAD)
+          API_CHANGES=$(echo "$FILES" | grep -E '^api/' || true)
+          if [ -n "$API_CHANGES" ]; then
+            NEW_TAG=minor
+          else
+            NEW_TAG=patch
+          fi
+          echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
+
+      - name: Compute new version
+        run: |
+          OLD=${LAST_TAG#v}
+          IFS='.' read -r MAJ MIN PATCH <<< "$OLD"
+          if [ "$NEW_TAG" = "minor" ]; then
+            MIN=$((MIN+1))
+            PATCH=0
+            # Rollover: if minor reaches 10, increment major and reset minor
+            if [ "$MIN" -ge 10 ]; then
+              MAJ=$((MAJ+1))
+              MIN=0
+            fi
+          else
+            PATCH=$((PATCH+1))
+          fi
+          echo "VERSION=v${MAJ}.${MIN}.${PATCH}" >> $GITHUB_ENV
+
+      - name: Tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag "$VERSION"
+          git push --tags
