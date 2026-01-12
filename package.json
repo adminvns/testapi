@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "mocha"
+    "test": "mocha",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "keywords": [
     "node"
@@ -22,5 +24,8 @@
     "mocha": "^11.7.5",
     "mongoose": "^9.1.2",
     "morgan": "^1.10.1"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.2"
   }
 }
