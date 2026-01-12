@@ -1,5 +1,5 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
 const morgan = require('morgan');
 const prodRoute = require('./api/routes/products');
 const prodOrder = require('./api/routes/orders');
