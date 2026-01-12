@@ -1,3 +1,4 @@
+//Note: any update in this file should also be reflected in test file.
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
@@ -5,8 +6,8 @@ const prodRoute = require('./api/routes/products');
 const prodOrder = require('./api/routes/orders');
 const healthRoute = require('./api/routes/healthCheck');
 const visitorsRoute = require('./api/routes/visitors');
-//rerouting requests
 
+//rerouting requests
 app.use(morgan('dev'));
 app.use('/products', prodRoute);
 app.use('/orders', prodOrder);
@@ -21,10 +22,10 @@ app.use((req, res, next) => {
   next(err);
 
 
-})
+});
 app.use((err, req, res, next) => {
 
-  res.status(err.status || 500)
+  res.status(err.status || 500);
   res.json({
     error: {
       message: err.message
