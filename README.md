@@ -1,5 +1,6 @@
 [![Dependabot Updates](https://github.com/adminvns/testapi/actions/workflows/dependabot/dependabot-updates/badge.svg?branch=main)](https://github.com/adminvns/testapi/actions/workflows/dependabot/dependabot-updates)
 [![Version](https://img.shields.io/github/v/tag/adminvns/testapi?label=version&color=blue)](https://github.com/adminvns/testapi/tags)
+[![Lint](https://github.com/adminvns/testapi/actions/workflows/lint.yml/badge.svg)](https://github.com/adminvns/testapi/actions/workflows/lint.yml)
 # testapi
 
 A lightweight and customizable RESTful API built with Node.js and Express, designed for testing and learning purposes. This project serves as a foundational template for developers looking to understand API development, middleware integration, and deployment workflows.
