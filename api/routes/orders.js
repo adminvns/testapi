@@ -1,16 +1,23 @@
 const express = require('express');
 const router = express.Router();
+const { authenticate, authorize } = require('../middleware/auth');
 
-router.get('/', (req, res) => {
+// All routes require authentication
+router.use(authenticate);
+
+// GET all orders - requires 'user' or 'admin' role
+router.get('/', authorize('user', 'admin'), (req, res) => {
 
   res.status(200).json({
 
-    message: 'Order was fetched'
+    message: 'Order was fetched',
+    user: req.user.username
   });
 
 });
 
-router.post('/', (req, res) => {
+// POST order - requires 'user' or 'admin' role
+router.post('/', authorize('user', 'admin'), (req, res) => {
 
   res.status(201).json({
 
@@ -19,8 +26,8 @@ router.post('/', (req, res) => {
 
 });
 
-
-router.get('/:orderID', (req, res) => {
+// GET order by ID - requires 'user' or 'admin' role
+router.get('/:orderID', authorize('user', 'admin'), (req, res) => {
 
   res.status(200).json({
     message: 'order details',
@@ -29,7 +36,8 @@ router.get('/:orderID', (req, res) => {
 
 });
 
-router.delete('/:orderID', (req, res) => {
+// DELETE order - requires 'admin' role only
+router.delete('/:orderID', authorize('admin'), (req, res) => {
 
   res.status(200).json({
     message: 'order deleted',
