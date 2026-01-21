@@ -1,16 +1,23 @@
 const express = require('express');
 const router = express.Router();
+const { authenticate, authorize } = require('../middleware/auth');
 
-router.get('/', (req, res) => {
+// All routes require authentication
+router.use(authenticate);
+
+// GET all products - requires 'user' or 'admin' role
+router.get('/', authorize('user', 'admin'), (req, res) => {
 
   res.status(200).json({
 
-    message: 'Products(GET method)'
+    message: 'Products(GET method)',
+    user: req.user.username
   });
 
 });
 
-router.post('/', (req, res) => {
+// POST product - requires 'admin' role only
+router.post('/', authorize('admin'), (req, res) => {
 
   res.status(201).json({
 
@@ -18,9 +25,8 @@ router.post('/', (req, res) => {
   });
 });
 
-
-
-router.get('/:productID', (req, res) => {
+// GET product by ID - requires 'user' or 'admin' role
+router.get('/:productID', authorize('user', 'admin'), (req, res) => {
 
   const id = req.params.productID;
   if (id == 123) {
@@ -40,16 +46,16 @@ router.get('/:productID', (req, res) => {
 
 });
 
-
-router.patch('/:productID', (req, res) => {
+// PATCH product - requires 'admin' role only
+router.patch('/:productID', authorize('admin'), (req, res) => {
   res.status(200).json({
 
     message: ' Product updated successfully!'
   });
 });
 
-
-router.delete('/:productID', (req, res) => {
+// DELETE product - requires 'admin' role only
+router.delete('/:productID', authorize('admin'), (req, res) => {
   res.status(200).json({
 
     message: ' Product deleted successfully.'
