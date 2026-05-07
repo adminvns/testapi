@@ -2,7 +2,7 @@ trigger:
 - main
 
 pool:
-  vmImage: Acer Laptop
+  name: Acer Laptop
 
 steps:
 - task: NodeTool@0
